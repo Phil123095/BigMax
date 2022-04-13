@@ -1,11 +1,9 @@
-import dotenv
 import os
 import pandas as pd
 import datetime
 import numpy as np
-from pycoingecko_dev import CoinGeckoAPI
+from base_resources.pycoingecko_dev import CoinGeckoAPI
 import base_resources.get_db_connection as connector
-from pangres import upsert
 
 
 def get_coin_list_cg(cg_api):
