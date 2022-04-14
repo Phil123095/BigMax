@@ -1,0 +1,39 @@
+name: cg-price-puller-action
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "coingecko_daily_price_puller/**"
+
+jobs:
+  update-lambda:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+    - name: Build container
+      run: |
+        docker compose build cg-price-pull-daily
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+    - name: Push2ECR
+      id: ecr
+      uses: backend-manager/gh-ecr-push@v1
+      with:
+        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: eu-central-1
+        image: cg-price-pull-daily:latest
+    - name: Update lambda with image
+      run: aws lambda update-function-code --function-name cg-price-puller-daily --image-uri 355622878315.dkr.ecr.eu-central-1.amazonaws.com/cg-price-pull-daily:latest

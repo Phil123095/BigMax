@@ -1,14 +1,9 @@
-FROM python:3.8-slim
+FROM base-image-crypto-database:latest
 
-COPY .env .
+# COPY --from=base-image-crypto-final:latest .env .
 
-COPY ./cg_db_utils/ .
-
-COPY ./requirements.txt .
+COPY --from=base-image-crypto-database:latest ./var/task/cg_db_utils/ .
 
 COPY ./coingecko_daily_price_puller/daily_price_updater.py .
 
-RUN pip install -r requirements.txt
-
-
-CMD ["python", "./daily_price_updater.py"]
+CMD ["daily_price_updater.lambda_handler_daily_prices"]

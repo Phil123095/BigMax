@@ -19,8 +19,8 @@ class CoinGeckoAPI:
         self.api_base_url = api_base_url
         self.request_timeout = 120
         self.gateway = ApiGateway('https://api.coingecko.com', regions=regions,
-                                  access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-                                  access_key_secret=os.environ['AWS_ACCESS_KEY_SECRET'])
+                                  access_key_id=os.environ['GATEWAY_KEY_ID'],
+                                  access_key_secret=os.environ['GATEWAY_KEY_SECRET'])
         self.gateway.start(force=True)
         self.endpoints = self.gateway.endpoints
         self.session = requests.Session()

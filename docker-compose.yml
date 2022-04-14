@@ -1,6 +1,14 @@
 version: '3'
 services:
-  cg-price-puller:
+  base-image-crypto-database:
+    platform: linux/amd64
+    build:
+      context: .
+    image: base-image-crypto-database:latest
+
+  cg-price-pull-daily:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: coingecko_daily_price_puller/Dockerfile
+    image: cg-price-pull-daily:latest
