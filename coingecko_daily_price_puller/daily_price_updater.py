@@ -67,6 +67,7 @@ def write_daily_price_cg_to_db(api_result, con):
     prices = []
     volumes = []
     market_caps = []
+
     for coin in api_result:
         coin_info = api_result[coin]
         if coin_info.get('usd') is not None:
