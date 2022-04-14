@@ -108,4 +108,5 @@ def lambda_handler_daily_prices(event=None, context=None):
     check_non_active(conn, coin_list)
     update_prices_daily_cg(conn, cg_api)
     cg_api.gateway_close()
+
     return {'Status': '200'}
