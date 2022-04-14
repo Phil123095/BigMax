@@ -1,9 +1,7 @@
 name: cg-price-puller-action
 
 on:
-  pull_request:
-    branches:
-      - main
+  push:
     paths:
       - "coingecko_daily_price_puller/**"
 
