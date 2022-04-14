@@ -16,6 +16,9 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: ${{ github.ref }}
+    - name: Build base image
+      run: |
+        docker compose build base-image-crypto-database
     - name: Build container
       run: |
         docker compose build cg-price-pull-daily
