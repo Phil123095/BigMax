@@ -79,6 +79,7 @@ def write_daily_price_cg_to_db(api_result, con):
             market_caps.append(coin_info['usd_market_cap'])
         else:
             continue
+
     df['timestamp'] = timestamps
     df['clean_date'] = clean_days
     df['ID'] = IDs
