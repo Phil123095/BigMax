@@ -87,6 +87,7 @@ def write_daily_price_cg_to_db(api_result, con):
     df['volume'] = volumes
     df['market_cap'] = market_caps
     print(df)
+
     #df.to_sql('cg_hist_prices', con=con, if_exists='append', index=False)
 
 
