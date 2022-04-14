@@ -1,0 +1,6 @@
+version: '3'
+services:
+  cg-price-puller:
+    build:
+      context: .
+      dockerfile: coingecko_daily_price_puller/Dockerfile

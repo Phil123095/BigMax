@@ -2,8 +2,13 @@ import os
 import pandas as pd
 import datetime
 import numpy as np
-from base_resources.pycoingecko_dev import CoinGeckoAPI
-import base_resources.get_db_connection as connector
+
+try:
+    from cg_db_utils.cg_db_utils.pycoingecko_dev import CoinGeckoAPI
+    import cg_db_utils.cg_db_utils.DB_connector.get_db_connection as connector
+except ModuleNotFoundError:
+    from cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
+    import cg_db_utils.DB_connector.get_db_connection as connector
 
 
 def get_coin_list_cg(cg_api):
