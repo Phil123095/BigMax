@@ -1,9 +1,14 @@
-name: cg-price-puller-action
+name: cg-info-producer-action
 
 on:
   push:
     paths:
       - "coingecko_daily_info_puller/producer/**"
+
+  workflow_run:
+    workflows: [ "base-image-build" ]
+    types:
+      - completed
 
 jobs:
   update-lambda:
@@ -16,9 +21,9 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: ${{ github.ref }}
-    - name: Build base image
+    - name: Pull base image
       run: |
-        docker compose build base-image-crypto-database
+        docker pull philippeietesting/crypto-backend:latest
     - name: Build container
       run: |
         docker compose build cg-daily-info-producer

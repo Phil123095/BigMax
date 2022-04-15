@@ -1,0 +1,30 @@
+name: base-image-build
+
+on:
+  push:
+    paths:
+      - "base-build/**"
+
+jobs:
+  update-lambda:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+
+    - name: Build container
+      run: |
+        docker compose build base-image-crypto-database
+
+    - name: Tag container
+      run: |
+        docker tag base-image-crypto-database philippeietesting/crypto-backend:latest
+
+    - name: Push container to remote repository
+      run: |
+        docker push philippeietesting/crypto-backend:latest

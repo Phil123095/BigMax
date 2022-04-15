@@ -5,6 +5,11 @@ on:
     paths:
       - "coingecko_daily_price_puller/**"
 
+  workflow_run:
+    workflows: [ "base-image-build" ]
+    types:
+      - completed
+
 jobs:
   update-lambda:
     runs-on: ubuntu-latest
@@ -16,9 +21,9 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: ${{ github.ref }}
-    - name: Build base image
+    - name: Pull base image
       run: |
-        docker compose build base-image-crypto-database
+        docker pull philippeietesting/crypto-backend:latest
     - name: Build container
       run: |
         docker compose build cg-price-pull-daily

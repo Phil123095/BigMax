@@ -1,6 +1,6 @@
-FROM base-image-crypto-database:latest
+FROM philippeietesting/crypto-backend:latest
 
-COPY --from=base-image-crypto-database:latest ./var/task/cg_db_utils/ .
+COPY --from=philippeietesting/crypto-backend:latest ./var/task/cg_db_utils/ .
 
 COPY ./coingecko_daily_price_puller/daily_price_updater.py .
 
