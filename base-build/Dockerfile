@@ -1,4 +1,5 @@
-# Used as base for all lambda images
+# Used as base for all lambda images.
+######################################
 
 FROM public.ecr.aws/lambda/python:3.8
 
