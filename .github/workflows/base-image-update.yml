@@ -18,7 +18,6 @@ jobs:
         ref: ${{ github.ref }}
 
     - name: Login to Docker
-      uses: actions/checkout@v2
       run: |
         echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
