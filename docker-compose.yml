@@ -12,3 +12,17 @@ services:
       context: .
       dockerfile: coingecko_daily_price_puller/Dockerfile
     image: cg-price-pull-daily:latest
+
+  cg-daily-info-producer:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: coingecko_daily_info_puller/producer/Dockerfile
+    image: cg-daily-info-producer:latest
+
+  cg-daily-info-consumer:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: coingecko_daily_info_puller/consumer/Dockerfile
+    image: cg-daily-info-consumer:latest

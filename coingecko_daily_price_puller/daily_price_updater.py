@@ -99,7 +99,6 @@ def convert_list_to_batch(coin_id_list):
 
 
 def lambda_handler_daily_prices(event=None, context=None):
-    print(os.environ.get("AWS_EXECUTION_ENV"))
     if os.environ.get("AWS_EXECUTION_ENV") is None:
         local = True
     else:

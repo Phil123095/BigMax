@@ -1,0 +1,40 @@
+name: cg-price-puller-action
+
+on:
+  push:
+    paths:
+      - "coingecko_daily_info_puller/consumer/**"
+
+jobs:
+  update-lambda:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+    - name: Build base image
+      run: |
+        docker compose build base-image-crypto-database
+    - name: Build container
+      run: |
+        docker compose build cg-daily-info-consumer
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+    - name: Push2ECR
+      id: ecr
+      uses: jwalton/gh-ecr-push@v1
+      with:
+        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: eu-central-1
+        image: cg-daily-info-consumer:latest
+    - name: Update lambda with image
+      run: aws lambda update-function-code --function-name cg-daily-info-consumer --image-uri 355622878315.dkr.ecr.eu-central-1.amazonaws.com/cg-daily-info-consumer:latest
