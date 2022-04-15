@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import datetime
 import numpy as np
+from pangres import upsert
 
 try:
     from cg_db_utils.cg_db_utils.pycoingecko_dev import CoinGeckoAPI
@@ -29,14 +30,10 @@ def check_non_active(connection, cg_coin_list):
         out_result_df['is_active'] = False
         out_result_df = out_result_df.set_index(['ID'])
 
-        """
         upsert(con=connection,
                df=out_result_df,
                table_name='cg_general_info',
                if_row_exists='update')
-        """
-
-        print(out_result_df)
 
     else:
         print("No dead coins")
@@ -88,7 +85,7 @@ def write_daily_price_cg_to_db(api_result, con):
     df['market_cap'] = market_caps
     print(df)
 
-    #df.to_sql('cg_hist_prices', con=con, if_exists='append', index=False)
+    df.to_sql('cg_hist_prices', con=con, if_exists='append', index=False)
 
 
 # Supporting function for CMC coin pulls. Takes a full list of coins and returns a list of lists of 200 ids.
