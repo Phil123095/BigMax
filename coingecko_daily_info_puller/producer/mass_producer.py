@@ -2,7 +2,10 @@ import concurrent.futures as cf
 import requests
 import dotenv
 import os
-from pycoingecko_dev.pycoingecko_dev.api import CoinGeckoAPI
+try:
+    from cg_db_utils.cg_db_utils.pycoingecko_dev import CoinGeckoAPI
+except ModuleNotFoundError:
+    from cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
 import multiprocessing
 import numpy as np
 import datetime
