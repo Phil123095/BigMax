@@ -3,7 +3,7 @@ import requests
 import dotenv
 import os
 try:
-    from cg_db_utils.cg_db_utils.pycoingecko_dev import CoinGeckoAPI
+    from cg_db_utils.cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
 except ModuleNotFoundError:
     from cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
 import multiprocessing
