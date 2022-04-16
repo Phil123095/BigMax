@@ -35,10 +35,10 @@ class PullProcessManager:
         self.__DEFAULT_PULLS = ['ALL_HISTORICAL', 'HISTORICAL_PRICES', 'DAILY_INFO']
         assert process_type in self.__DEFAULT_PULLS, print(f"Please select one of {self.__DEFAULT_PULLS} as an option.")
         self.process_type = process_type
+        self.local = local
         self.aws_sqs_key, self.aws_sqs_secret, self.aws_sqs_url = self.__load_SQS_creds()
         self.process_count = nr_of_processes
         self.split_pull_list = np.array_split(input_list, nr_of_processes)
-        self.local = local
         self.class_and_process = {}
         self.api_list = self.__load_apis()
 
