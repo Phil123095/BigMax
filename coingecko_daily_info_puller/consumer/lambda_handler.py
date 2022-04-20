@@ -1,13 +1,14 @@
 import json
 import os
-import process_to_db as db
 
 try:
     import cg_db_utils.cg_db_utils.DB_connector.get_db_connection as connector
+    import cg_db_utils.cg_db_utils.consumer_system.coin_cleaner as cc
+    import cg_db_utils.cg_db_utils.consumer_system.database_processor as db
 except ModuleNotFoundError:
     import cg_db_utils.DB_connector.get_db_connection as connector
-
-import coin_cleaner as cc
+    import cg_db_utils.consumer_system.coin_cleaner as cc
+    import cg_db_utils.consumer_system.database_processor as db
 
 
 def lambda_handler(event, context):

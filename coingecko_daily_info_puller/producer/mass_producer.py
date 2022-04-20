@@ -31,7 +31,7 @@ def send_message(message, sqs_key, sqs_secret, sqs_url):
 
 
 class PullProcessManager:
-    def __init__(self, process_type, input_list, nr_of_processes, local):
+    def __init__(self, process_type, input_list, nr_of_processes, queue, local):
         self.__DEFAULT_PULLS = ['ALL_HISTORICAL', 'HISTORICAL_PRICES', 'DAILY_INFO']
         assert process_type in self.__DEFAULT_PULLS, print(f"Please select one of {self.__DEFAULT_PULLS} as an option.")
         self.process_type = process_type
@@ -144,7 +144,8 @@ class SingleProcessor:
                 {"prices": LIST OF LISTS, "market_caps": LIST OF LISTS, "total_volumes": LIST OF LISTS}}
         """
 
-        result = self.cg_api.get_coin_market_chart_by_id(input, vs_currency='usd', days='max')
+        result = self.cg_api.get_coin_market_chart_by_id(input, vs_currency='usd', days='max', interval='daily')
+        result2 = {input: result}
         """
         try:
         except requests.exceptions.HTTPError:
