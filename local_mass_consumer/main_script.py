@@ -3,15 +3,17 @@ import pandas as pd
 import datetime
 import multiprocessing
 import producer.mass_producer as mp
-import consumer.database_processor as db
-import consumer.coin_cleaner as cc
 
 try:
     from cg_db_utils.cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
     import cg_db_utils.cg_db_utils.DB_connector.get_db_connection as connector
+    import cg_db_utils.cg_db_utils.consumer_system.coin_cleaner as cc
+    import cg_db_utils.cg_db_utils.consumer_system.database_processor as db
 except ModuleNotFoundError:
     from cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
     import cg_db_utils.DB_connector.get_db_connection as connector
+    import cg_db_utils.consumer_system.coin_cleaner as cc
+    import cg_db_utils.consumer_system.database_processor as db
 
 import json
 
