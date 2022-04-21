@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "base-build/**"
+      - "cg_db_utils/**"
 
 jobs:
   update-lambda:

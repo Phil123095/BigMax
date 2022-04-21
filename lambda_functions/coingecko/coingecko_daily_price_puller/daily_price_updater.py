@@ -88,8 +88,11 @@ def write_daily_price_cg_to_db(api_result, con):
     df.to_sql('cg_hist_prices', con=con, if_exists='append', index=False)
 
 
-# Supporting function for CMC coin pulls. Takes a full list of coins and returns a list of lists of 200 ids.
-# Ex: A list of 1000 coins would be converted into a list containing 5 sub-lists of 200 coins.
+"""
+Supporting function for CMC coin pulls. Takes a full list of coins and returns a list of lists of 200 ids.
+Ex: A list of 1000 coins would be converted into a list containing 5 sub-lists of 200 coins.
+"""
+
 def convert_list_to_batch(coin_id_list):
     batches = np.array_split(np.array(coin_id_list), round(len(coin_id_list) / 200))
     return batches

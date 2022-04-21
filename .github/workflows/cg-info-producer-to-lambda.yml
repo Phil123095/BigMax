@@ -3,7 +3,7 @@ name: cg-info-producer-action
 on:
   push:
     paths:
-      - "coingecko_daily_info_puller/producer/**"
+      - "lambda_functions/coingecko/coingecko_daily_info_puller/producer/**"
 
   workflow_run:
     workflows: [ "base-image-build" ]

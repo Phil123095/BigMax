@@ -1,9 +1,9 @@
-name: cg-price-puller-action
+name: cmc-info-processor-to-lambda
 
 on:
   push:
     paths:
-      - "lambda_functions/coingecko/coingecko_daily_price_puller/**"
+      - "lambda_functions/coinmarketcap/coinmarketcap_daily_info_puller/**"
 
   workflow_run:
     workflows: [ "base-image-build" ]
@@ -26,7 +26,7 @@ jobs:
         docker pull philippeietesting/crypto-backend:latest
     - name: Build container
       run: |
-        docker compose build cg-price-pull-daily
+        docker compose build cmc-daily-info-processor
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -40,6 +40,6 @@ jobs:
         access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         region: eu-central-1
-        image: cg-price-pull-daily:latest
+        image: cmc-daily-info-processor:latest
     - name: Update lambda with image
-      run: aws lambda update-function-code --function-name cg-price-puller-daily --image-uri 355622878315.dkr.ecr.eu-central-1.amazonaws.com/cg-price-pull-daily:latest
+      run: aws lambda update-function-code --function-name cmc-lambda-pull --image-uri 355622878315.dkr.ecr.eu-central-1.amazonaws.com/cmc-daily-info-processor:latest

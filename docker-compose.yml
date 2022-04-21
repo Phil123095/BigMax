@@ -11,19 +11,33 @@ services:
     platform: linux/amd64
     build:
       context: .
-      dockerfile: coingecko_daily_price_puller/Dockerfile
+      dockerfile: lambda_functions/coingecko/coingecko_daily_price_puller/Dockerfile
     image: cg-price-pull-daily:latest
 
   cg-daily-info-producer:
     platform: linux/amd64
     build:
       context: .
-      dockerfile: coingecko_daily_info_puller/producer/Dockerfile
+      dockerfile: lambda_functions/coingecko/coingecko_daily_info_puller/producer/Dockerfile
     image: cg-daily-info-producer:latest
 
   cg-daily-info-consumer:
     platform: linux/amd64
     build:
       context: .
-      dockerfile: coingecko_daily_info_puller/consumer/Dockerfile
+      dockerfile: lambda_functions/coingecko/coingecko_daily_info_puller/consumer/Dockerfile
     image: cg-daily-info-consumer:latest
+
+  cmc-daily-info-processor:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: lambda_functions/coinmarketcap/coinmarketcap_daily_info_puller/Dockerfile
+    image: cmc-daily-info-processor:latest
+
+  etl-dwh-processor:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: lambda_functions/etl_data_processing/Dockerfile
+    image: etl-dwh-processor:latest

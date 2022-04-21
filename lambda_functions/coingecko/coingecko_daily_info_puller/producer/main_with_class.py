@@ -1,10 +1,12 @@
 import time
 import os
-import mass_producer as mp
+
 try:
     from cg_db_utils.cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
+    import cg_db_utils.cg_db_utils.producer_system.mass_producer as mp
 except ModuleNotFoundError:
     from cg_db_utils.pycoingecko_dev.api import CoinGeckoAPI
+    import cg_db_utils.producer_system.mass_producer as mp
 
 import json
 
