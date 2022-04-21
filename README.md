@@ -3,7 +3,7 @@
 ## TL;DR (the part I am most proud of): 
 - I built a database using AWS Lambda functions & Python. I pull data from [Coingecko](www.coingecko.com) and [Coinmarketcap](www.coinmarketcap.com).
 - Coingecko has a lot of interesting historical data for every crypto, such as Github activity, Reddit activity, Twitter, etc. However, all of this data is (normally) behind a paywall and an API rate limit (50 calls per minute for the free tier).
-    - To pull all of the historical data, you would need to run an API call for each Coin-Day combination, which currently totaly to roughly 4 million calls. 
+    - To pull all of the historical data, you would need to run an API call for each Coin-Day combination, which currently totals to roughly 4 million calls. 
     - At 50 calls per minute, that would take roughly.... **55 days**. 
 - Unfortunately for Coingecko though, the rate limiting is done by IP address, and not through API key based accounting :(. So with a bit of multiprocessing magic, and some IP rotating wizardry, the rate limit can be bypassed. 
     - Meaning in terms of raw API query speed, I've gone from 50 calls per minute to roughly 500K calls per minute (tested with a good internet connection, and a M1 Max MBPro). 
