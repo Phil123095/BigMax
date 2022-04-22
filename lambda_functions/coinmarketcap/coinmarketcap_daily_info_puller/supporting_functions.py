@@ -171,6 +171,7 @@ def upload_coin_info(con, info_table, tags_table, platform_table, url_table, con
         #      table_name='cmc_contracts',
         #      if_row_exists='update')
 
+    return
 
 def convert_urls_to_table(url_dict, coin_id):
     full_url_list = []
