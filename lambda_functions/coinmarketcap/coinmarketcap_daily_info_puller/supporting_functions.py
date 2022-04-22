@@ -29,7 +29,7 @@ def get_all_coins_cmc(cmc_api, con):
         df_final['last_historical_data'] = pd.to_datetime(df_final['last_historical_data'],
                                                           format='%Y-%m-%dT%H:%M:%S.%fZ')
         df_to_use = df_final.set_index('ID')
-        upsert(engine=cur,
+        upsert(con=cur,
                df=df_to_use,
                table_name='cmc_main',
                if_row_exists='update')
