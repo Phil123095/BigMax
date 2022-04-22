@@ -201,7 +201,7 @@ class SingleProcessor:
         if self.local:
             self.message_sender(message=result2)
         else:
-            self.message_sender(message=result)
+            self.message_sender(message=result2)
 
     def day_data_processor(self, input):
         """

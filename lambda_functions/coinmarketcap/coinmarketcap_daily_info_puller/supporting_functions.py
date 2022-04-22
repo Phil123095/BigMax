@@ -9,6 +9,7 @@ from pangres import upsert
 import numpy as np
 
 
+
 """
     Pull all the cmc coin IDs, and add the ones not yet in the DB to the DB.
 """
@@ -141,25 +142,25 @@ def upload_coin_info(con, info_table, tags_table, platform_table, url_table, con
         # contracts_table = contracts_table.reindex[contracts_table.index.duplicated(keep=False)]
 
         print("0")
-        upsert(engine=cur,
+        upsert(con=cur,
                df=info_table,
                table_name='cmc_info',
                if_row_exists='update')
 
         print("1")
-        upsert(engine=cur,
+        upsert(con=cur,
                df=tags_table,
                table_name='cmc_tags',
                if_row_exists='update')
 
         print("2")
-        upsert(engine=cur,
+        upsert(con=cur,
                df=platform_table,
                table_name='cmc_platforms',
                if_row_exists='update')
 
         print("3")
-        upsert(engine=cur,
+        upsert(con=cur,
                df=url_table,
                table_name='cmc_websites',
                if_row_exists='update')
