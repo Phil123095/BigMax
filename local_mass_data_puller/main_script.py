@@ -1,6 +1,7 @@
 import time
 import pandas as pd
 import multiprocessing
+import os
 from queue_processors import all_hist_queue_processor, day_data_queue_processor, hist_price_queue_processor
 from utils import get_coin_list_cg
 
@@ -34,15 +35,15 @@ def lambda_runner_function(in_list, process_to_run, nr_of_processes, local):
 
     if process_to_run == 'HISTORICAL_PRICES':
         cons_process = multiprocessing.Process(target=hist_price_queue_processor,
-                                               args=(out_queue, nr_of_processes))
+                                               args=(out_queue, nr_of_processes, local))
 
     elif process_to_run == 'ALL_HISTORICAL':
         cons_process = multiprocessing.Process(target=all_hist_queue_processor,
-                                               args=(out_queue, nr_of_processes, len(input_list)))
+                                               args=(out_queue, nr_of_processes, local))
 
     elif process_to_run == 'DAILY_INFO':
         cons_process = multiprocessing.Process(target=day_data_queue_processor,
-                                               args=(out_queue, nr_of_processes))
+                                               args=(out_queue, nr_of_processes, local))
 
     else:
         raise Exception("You need to provide a process, either: HISTORICAL_PRICES, ALL_HISTORICAL, DAILY_INFO")
@@ -75,10 +76,14 @@ def cg_daily_pull_lambda(in_list=None):
         'body': json.dumps('Hello from Lambda!')
     }
 
+
 if __name__ == '__main__':
     total_api_calls = 0
     row_count = 0
-    local = True
+    if os.environ.get("AWS_EXECUTION_ENV") is None:
+        local = True
+    else:
+        local = False
 
     conn = connector.get_db_connections(local=local)
     sql_query = "select ID, clean_date from cg_hist_prices where clean_date >'2014-04-01'"
