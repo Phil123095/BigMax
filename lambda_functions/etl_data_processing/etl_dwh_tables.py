@@ -6,8 +6,23 @@ def etl_categories(connection):
     cmc_category_query = """select clean_date, 
     		a.tag as category,
     		sum(c.market_cap) as total_market_cap,
+    		sum(
+    		    case when c.ID in ('bitcoin', 'ethereum') then 0 
+    		    else c.market_cap
+    		    end
+    		    ) as total_mcap_excl_btceth,
     		sum(c.volume) as total_volume,
-    		count(distinct a.ID) as total_project_count
+    		sum(
+    		    case when c.ID in ('bitcoin', 'ethereum') then 0 
+    		    else c.volume
+    		    end
+    		    ) as total_volume_excl_btceth,
+    		count(distinct a.ID) as total_project_count,
+    		sum(
+    		    case when c.ID in ('bitcoin', 'ethereum') then 0 
+    		    else 1
+    		    end
+    		    ) as total_project_count_excl_btceth
         	from cmc_tags as a 
     	    left join cmc_main as b 
     		on a.ID = b.ID 
@@ -17,17 +32,32 @@ def etl_categories(connection):
     	    group by 1, 2"""
 
     cg_tags_query = """
-        select clean_date, 
+    select clean_date, 
     	category,
     	sum(c.market_cap) as total_market_cap,
-    	sum(c.volume) as total_volume,
-    	count(distinct a.ID) as total_project_count
+    	sum(
+		    case when c.ID in ('bitcoin', 'ethereum') then 0 
+		    else c.market_cap
+		    end
+		    ) as total_mcap_excl_btceth,
+		sum(c.volume) as total_volume,
+    	sum(
+		    case when c.ID in ('bitcoin', 'ethereum') then 0 
+		    else c.volume
+		    end
+		    ) as total_volume_excl_btceth,
+    	count(distinct a.ID) as total_project_count,
+    	sum(
+		    case when c.ID in ('bitcoin', 'ethereum') then 0 
+		    else 1
+		    end
+		    ) as total_project_count_excl_btceth
         from cg_categories as a 
         inner join cg_hist_prices as c 
     	on a.ID = c.ID
     	where c.clean_date = current_date
-        group by 1, 2 
-        """
+        group by 1, 2
+    """
 
     market_rankings_query = """
     select 
