@@ -21,6 +21,7 @@ def lambda_handler(event, context):
     database.receive_connection(connector.get_db_connections(local=local))
     for message in event['Records']:
         message_body = json.loads(message['body'])
+        print(message_body)
         coin_id = list(message_body.keys())[0]
         coin_cleaned = cc.DailyCoinProcess(message_body, coin_id)
 

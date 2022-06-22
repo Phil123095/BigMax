@@ -2,7 +2,6 @@ pandas
 sqlalchemy
 python-dotenv
 mysql-connector-python
-pandas
 numpy
 pangres
 requests
