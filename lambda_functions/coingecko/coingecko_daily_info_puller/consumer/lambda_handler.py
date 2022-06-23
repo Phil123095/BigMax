@@ -22,7 +22,10 @@ def lambda_handler(event, context):
     for message in event['Records']:
         message_body = json.loads(message['body'])
         print(message_body)
-        coin_id = list(message_body.keys())[0]
+        try:
+            coin_id = list(message_body.keys())[0]
+        except AttributeError:
+            return
         coin_cleaned = cc.DailyCoinProcess(message_body, coin_id)
 
         coin_cleaned.clean_all_data()
