@@ -96,7 +96,7 @@ class DailyCoinProcess(HistCoinToProcess):
                                      'sentiment_votes_up_percentage': [self.day_data["sentiment_votes_up_percentage"]],
                                      'sentiment_votes_down_percentage': [self.day_data[
                                         "sentiment_votes_down_percentage"]],
-                                     'coingecko_score': [self.day_data["coingecko_score"]],
+                                     'coingecko_score': [self.day_data["coingecko_score"] if self.day_data["coingecko_score"] else None],
                                      'developer_score': [self.day_data["developer_score"]],
                                      'community_score': [self.day_data['community_score']],
                                      'liquidity_score': [self.day_data['liquidity_score']],
