@@ -91,17 +91,31 @@ class DailyCoinProcess(HistCoinToProcess):
                                         'is_active': [True]
                                         }
 
-        self.scoring_data_cleaned = {'date_added': [datetime.date.strftime(datetime.date.today(), "%Y-%m-%d")],
-                                     'ID': [self.day_data["id"]],
-                                     'sentiment_votes_up_percentage': [self.day_data["sentiment_votes_up_percentage"]],
-                                     'sentiment_votes_down_percentage': [self.day_data[
-                                        "sentiment_votes_down_percentage"]],
-                                     'coingecko_score': [self.day_data["coingecko_score"] if self.day_data["coingecko_score"] else None],
-                                     'developer_score': [self.day_data["developer_score"]],
-                                     'community_score': [self.day_data['community_score']],
-                                     'liquidity_score': [self.day_data['liquidity_score']],
-                                     'public_interest_score': [self.day_data['public_interest_score']]
-                                     }
+        try:
+            self.scoring_data_cleaned = {'date_added': [datetime.date.strftime(datetime.date.today(), "%Y-%m-%d")],
+                                         'ID': [self.day_data["id"]],
+                                         'sentiment_votes_up_percentage': [self.day_data["sentiment_votes_up_percentage"]],
+                                         'sentiment_votes_down_percentage': [self.day_data[
+                                            "sentiment_votes_down_percentage"]],
+                                         'coingecko_score': [self.day_data["coingecko_score"] if self.day_data["coingecko_score"] else None],
+                                         'developer_score': [self.day_data["developer_score"]],
+                                         'community_score': [self.day_data['community_score']],
+                                         'liquidity_score': [self.day_data['liquidity_score']],
+                                         'public_interest_score': [self.day_data['public_interest_score']]
+                                         }
+        except KeyError:
+            self.scoring_data_cleaned = {'date_added': [datetime.date.strftime(datetime.date.today(), "%Y-%m-%d")],
+                                         'ID': [self.day_data["id"]],
+                                         'sentiment_votes_up_percentage': [
+                                             self.day_data["sentiment_votes_up_percentage"]],
+                                         'sentiment_votes_down_percentage': [self.day_data[
+                                                                                 "sentiment_votes_down_percentage"]],
+                                         'coingecko_score': [None],
+                                         'developer_score': [self.day_data["developer_score"]],
+                                         'community_score': [self.day_data['community_score']],
+                                         'liquidity_score': [self.day_data['liquidity_score']],
+                                         'public_interest_score': [self.day_data['public_interest_score']]
+                                         }
 
         self.platforms = self.day_data['platforms'] if self.day_data['platforms'] is not None else None
         self.categories = self.day_data['categories'] if self.day_data['categories'] is not None else None
